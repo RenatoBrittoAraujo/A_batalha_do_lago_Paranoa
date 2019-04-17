@@ -1,0 +1,15 @@
+if(você jogou esse joguinho){
+
+    eu.agradecer(voce);
+
+    if(gostou)
+        return valeu();
+        
+    if(não gostou)
+        return tudo_bem_irmão_a_vida_da_dessas();
+ 
+}else{
+
+    voce.jogue();
+    
+}

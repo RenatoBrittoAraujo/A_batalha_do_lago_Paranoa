@@ -1,0 +1,43 @@
+# Entenda a estrutura dos mapas
+# Comentarios sao ignorados na leitura do mapa, o PRIMEIRO CARACTERE deve ser '#'
+
+# Largura a altura devem ser declaradas antes dos navios
+
+# Largura do mapa (indexado do 1)
+L 12
+
+# Altura do mapa (indexado do 1)
+A 23
+
+# nome_do_navio		Nome
+# x y			    Posicao
+# norte			    Orientacao 
+
+# Norte de tamanho quatro na posicao 0 0 equivale a (0,0), (0,1), (0,2), (0,3)
+# Leste de tamanho dois na posicao 1 1 equivale a (1,1), (0,1)
+
+# Note que a capitalização não importa desde que o nome esteja certo
+
+# Tipos de navios
+
+# - Porta_Teco_Teco         tamanho: 4
+# - Iate                    tamanho: 2
+# - Prancha_de_SUP          tamanho: 1
+
+# Navios que ocupam posicoes fora do mapa sao ignorados, mapa vai de [1 <-> largura] no x e [1 <-> altura] no y
+
+Porta_Teco_Teco
+1 1
+norte
+
+Iate
+5 5
+LeSte
+
+pranChA_De_sUp
+8 7
+SuL
+
+FIM
+
+Indica o fim da leitura, portanto qualquer coisa que escrita aqui é ignorada
