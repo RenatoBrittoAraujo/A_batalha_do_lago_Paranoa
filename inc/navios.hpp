@@ -30,7 +30,7 @@ public:
     Porta_teco_teco();
 
     // Extensao da funcao abstrata processa da classe Navio
-    virtual std::pair<std::string, std::pair<int, int>> processa(int * dano);
+    virtual std::pair<std::string, std::pair<int, int>> processa(const int dano);
 
 };
 
@@ -49,7 +49,7 @@ public:
     Pracha_de_SUP();
 
     // Extensao da funcao abstrata processa da classe Navio
-    virtual std::pair<std::string, std::pair<int, int>> processa(int * dano);
+    virtual std::pair<std::string, std::pair<int, int>> processa(const int dano);
 
 };
 
@@ -76,7 +76,7 @@ public:
     Iate();
 
     // Funcao da classe abstrata Navio
-    virtual std::pair<std::string, std::pair<int ,int>> processa(int * dano);
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
 
 };
 

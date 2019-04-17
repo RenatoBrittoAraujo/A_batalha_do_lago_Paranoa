@@ -124,7 +124,7 @@ private:
     bool destroiMapa();
 
     // Processa ataque no mapa e retorna string de descicao do ataque
-    std::string ataque(const int x, const int y, Navio * inimigo, bool emMassa = false);
+    std::string ataque(const int x, const int y, Navio * inimigo, const int dano, bool emMassa = false);
 
     // Retorna representacao bidimensional de mapa
     std::vector<std::string> * mostrarMapa();

@@ -16,6 +16,9 @@ public:
     // Mostra tela de saida
     void sair();
 
+    // Mostra scoreboard de partidas jogadas
+    void scoreboard();
+
 };
 
 #endif

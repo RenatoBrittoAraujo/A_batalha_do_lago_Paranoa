@@ -13,6 +13,7 @@ Navio::Navio(){
     orientacao = 0;
     tipo = "Navio comum";
     amocado = 0;
+    amocado = true;
 
 }
 
@@ -32,7 +33,7 @@ bool Navio::estaVivo(){
 // Essa e a central que processa os ataques em todos os navios
 // recebe o dano e o inimigo que atacou e processa o dano recebido, o
 // contra ataque e retorna a string que descreve o ataque
-std::string Navio::ataque(int * dano, Navio * inimigo){
+std::string Navio::ataque(const int dano, Navio * inimigo){
 
     std::pair<std::string, std::pair<int, int>> resultado = processa(dano);
 

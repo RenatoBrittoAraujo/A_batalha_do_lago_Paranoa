@@ -50,13 +50,13 @@ public:
     // int 2 = contrataque
     // Dessa forma, o ataque de todos os navios e
     // processado pela mesma funcao mas sao diferentes
-    virtual std::pair<std::string, std::pair<int, int>> processa(int * dano) = 0;
+    virtual std::pair<std::string, std::pair<int, int>> processa(const int dano) = 0;
 
     // Retorna o numero identificador do navio
     virtual int getTipo()=0;
 
     // Processa o ataque e retorna status
-    std::string ataque(int * dano, Navio * inimigo);
+    std::string ataque(const int dano, Navio * inimigo);
 
     // Retorno verdadeiro se navio esta vivo e falso caso contrario
     bool estaVivo();

@@ -6,7 +6,7 @@ int main(){
 
     enum {
     // Menu principal
-            SAIR, JOGAR, FAZER_MAPA, SOBRE, RANKING,
+            SAIR, JOGAR, FAZER_MAPA, SOBRE, SCOREBOARD,
 
     // Menu mapa
             MENU_PRINCIPAL, CRIAR_MAPA, RAND_MAPA, DESTROI_MAPA, LISTAR_MAPAS, VER_MAPA 
@@ -34,7 +34,7 @@ int main(){
                 
             while(opcao != MENU_PRINCIPAL){
 
-                opcao = menu_de_mapa.menuEscolha() + RANKING + 1; // Por causa do enum
+                opcao = menu_de_mapa.menuEscolha() + SCOREBOARD + 1; // Por causa do enum
 
                 if(opcao == CRIAR_MAPA)
                     menu_de_mapa.criarMapa();
@@ -58,8 +58,8 @@ int main(){
         if(opcao == SOBRE)
             menu.sobre();
 
-        if(opcao == RANKING)
-            menu.sobre();
+        if(opcao == SCOREBOARD)
+            menu.scoreboard();
         
         if(opcao == SAIR)
             menu.sair();

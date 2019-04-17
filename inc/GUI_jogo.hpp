@@ -30,7 +30,13 @@ private:
     };
 
     // Configuracao para jogo (escolher mapas, definir nome dos players)
-    void configurarPlayer(Mapa * player, const int id_player);
+    void escolherMapa(Mapa * player, const int id_player);
+
+    // Gera mapa com mesmas especificacoes para cada player
+    void geracaoDeMapa();
+
+    // Os players escolhem seus nomes no jogo
+    void escolherNome(const int player);
 
 public:
 

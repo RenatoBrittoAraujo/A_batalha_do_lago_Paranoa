@@ -474,7 +474,7 @@ Navio * Mapa::encontrarCoordenada(const int x, const int y){
 }
 
 // Processa o ataque
-std::string Mapa::ataque(const int x, const int y, Navio * inimigo, bool emMassa){
+std::string Mapa::ataque(const int x, const int y, Navio * inimigo, const int dano, bool emMassa){
 
     Navio * atingido = encontrarCoordenada(x, y);
 
@@ -486,8 +486,6 @@ std::string Mapa::ataque(const int x, const int y, Navio * inimigo, bool emMassa
 
     bool deuCerto = true;
 
-    int dano = 200;
-
     // 1/10 chance de ataque falhar
     if(!randInt(0, 10) and !emMassa)
         resultado = "Ataque falhou! " + ataquesFalhos[randInt(0 , (int)ataquesFalhos.size() - 1)];
@@ -498,7 +496,7 @@ std::string Mapa::ataque(const int x, const int y, Navio * inimigo, bool emMassa
 
     else{
 
-        resultado += atingido->ataque(&dano, inimigo);
+        resultado += atingido->ataque(dano, inimigo);
 
         // Se morreu o navio alvo
         if(!atingido->estaVivo()){
@@ -541,6 +539,13 @@ std::vector<std::string> * Mapa::mostrarMapaDeJogo(){
     for(int i = 0; i <= altura; i++)
         mapa_de_jogo.push_back(std::string(largura + 1, '~'));
 
+    // Mostra ultimos ataques
+    for(auto ataque: ultimos_ataques){
+
+        mapa_de_jogo[ataque.second][ataque.first] = 'X';
+
+    }
+
     // Mostra navios nao escondidos
     for(auto navio: navios){
 
@@ -549,13 +554,6 @@ std::vector<std::string> * Mapa::mostrarMapaDeJogo(){
             navioNoJogo(navio);
 
         }
-
-    }
-
-    // Mostra ultimos ataques
-    for(auto ataque: ultimos_ataques){
-
-        mapa_de_jogo[ataque.second][ataque.first] = 'X';
 
     }
 
