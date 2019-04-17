@@ -1,5 +1,7 @@
 # A Batalha do Lago Paranoá
 
+REPOSITÓRIO ORIGINAL: https://gitlab.com/renatoba/ep1
+
 &nbsp;&nbsp;Reacriação brasiliense do Batalha Naval!
 
 ## Jogo
