@@ -80,4 +80,119 @@ public:
 
 };
 
+class JetSki: public Navio{
+
+private:
+
+    // Quando turbo esta ligado, JetSki nao e atacado no proximo turno
+    bool turbo;
+
+public:
+
+    // Retorna enumeracao do tipo da embarcao
+    virtual int getTipo();
+
+    JetSki();
+
+    // Funcao da classe abstrata Navio
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
+
+};
+
+class Espaco_nave: public Navio{
+
+private:
+
+    // Define a recuperacao de vida da espaco nave
+    int tecnologia;
+
+    // Se os tripulantes forem vogons, eles podem tentar destruir a terra para fazer um auto estrada,
+    // e no processo matam um navio aleatorio seu
+    bool vogons;
+
+public:
+
+    // Retorna enumeracao do tipo da embarcao
+    virtual int getTipo();
+
+    Espaco_nave();
+
+    // Funcao da classe abstrata Navio
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
+
+};
+
+class Caravela: public Navio{
+
+private:
+
+    // Quanto mais especiarias, maior sao as chaces do ataque ser evitado, porem causa mais dano
+    int especiarias;
+
+    // Nome do comandante da caravela
+    std::string velejador;
+
+    // Nomes de velejadores famosos
+    static std::vector<std::string> nomes_de_velejadores;
+
+
+public:
+
+    // Retorna enumeracao do tipo da embarcao
+    virtual int getTipo();
+
+    Caravela();
+
+    // Funcao da classe abstrata Navio
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
+
+};
+
+class Dois_caras_numa_moto: public Navio{
+
+private:
+
+    // O valor de responsa na quebrada, ta ligado? Quanto maior o valor de responsa
+    // mais os dois caras podem chamar os menor da quebrada pra resolver a treta
+    // e contra-atacar
+    int quebrada;
+
+    // Quebrada de origem dos dois caras numa moto
+    std::string nome_da_quebrada;
+
+    // Nomes de bairros de brasilia
+    static std::vector<std::string> quebradas;
+
+public:
+
+    // Retorna enumeracao do tipo da embarcao
+    virtual int getTipo();
+
+    Dois_caras_numa_moto();
+
+    // Funcao da classe abstrata Navio
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
+
+};
+
+class FBI: public Navio{
+
+private:
+
+    // Probabilidade mindfuck de na verdade o suposto agentes do FBI serem na verdade espioes russos
+    // que ao serem atacados matam o adversario e morrem no processo
+    bool EspioesRussos;
+
+public:
+
+    // Retorna enumeracao do tipo da embarcao
+    virtual int getTipo();
+
+    FBI();
+
+    // Funcao da classe abstrata Navio
+    virtual std::pair<std::string, std::pair<int ,int>> processa(const int dano);
+
+};
+
 #endif

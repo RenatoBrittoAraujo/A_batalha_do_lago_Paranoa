@@ -38,20 +38,37 @@ private:
     // Os players escolhem seus nomes no jogo
     void escolherNome(const int player);
 
-public:
-
-
-    // Roda turnos ate que um jogador perca o jogo
-    void jogar();
-
-    // Players escolhem seus nome e mapas
-    void escolhaDeMapas();
+    // Verdadeiro se tipo de jogo escolhido e singlePlayer
+    bool singlePlayer;
 
     // Processa o turno de um jogador
     bool turno(const int player);
 
+    // Printa a ascii do adversario atual
+    void printaInimigo(std::string);
+
     // Mostra tela de configuracao de opcoes de jogo
     void configurarJogo();
+
+    // Array com nomes estranhos para a Inteligencia
+    static std::vector<std::string> nomes_estranhos;
+
+public:
+
+    // Player(s) escolhe se vao jogar no modo single-player ou multi-player
+    bool tipoDeJogo();
+
+    // Roda turnos ate que um jogador perca o jogo, retorna verdadeiro se jogar quer sair do jogo
+    bool jogar(bool * vitoria = NULL);
+
+    // Players escolhem seus nome e mapas
+    void configurarPartida();
+
+    // Seta o nome do player 
+    void configuracaoHistoria();
+
+    // Modo historia do jogo
+    void modoHistoria();
 
 };
 

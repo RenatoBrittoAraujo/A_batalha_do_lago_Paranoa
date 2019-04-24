@@ -1,9 +1,6 @@
 #ifndef NAVIO
 #define NAVIO
 
-#include <string> // string
-#include <utility> // pair
-
 class Navio{
 
 protected:

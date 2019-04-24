@@ -7,6 +7,29 @@
 #include "../inc/mapa.hpp"
 #include "../inc/helpers.hpp"
 
+std::map<int, std::string> Jogo::intParaNome({
+
+    {T_Porta_teco_teco, "Porta Teco Teco"},
+    {T_Iate, "Iate"},
+    {T_Prancha_de_sup, "Prancha de SUP"},
+    {T_Dois_caras_numa_moto, "Dois caras numa moto"},
+    {T_Caravela, "Caravela"},
+    {T_Espaco_nave, "Espaco Nave"},
+    {T_FBI, "[CONFIDENCIAL]"},
+    {T_Jet_Ski, "Jet Ski"}
+
+});
+
+std::map<int, std::string> Jogo::stringAcao ({
+
+    {ATAQUE_COMUM, "Ataque comum"},
+    {ATAQUE_EM_AREA, "Ataque em area"},
+    {CURAR_NAVIO, "Curar navio"},
+    {MISSEL_TELEGUIADO, "Missel teleguiado"},
+    {RELEVAR_POSICAO, "Relevar posicao"}
+
+});
+
 int Jogo::salvarPontuacao(const int player){
 
     int pontuacao = calcularPontuacao(player);
@@ -19,8 +42,12 @@ int Jogo::salvarPontuacao(const int player){
     std::ifstream arquivo(caminho);
 
     std::priority_queue<std::pair<int, std::string>> ranking;
+
+    // Bota todas as pontuacoes numa priority queue (heap)
     
     ranking.push(pontuacaoNova);
+
+    // Se arquivo existe, bota seu conteudo na priority queue
 
     if(arquivo.good()){
 
@@ -39,6 +66,8 @@ int Jogo::salvarPontuacao(const int player){
 
     }
 
+    // Apaga o arquivo
+
     std::remove(caminho.c_str());
 
     std::ofstream novoArquivo(caminho);
@@ -46,6 +75,8 @@ int Jogo::salvarPontuacao(const int player){
     int posicao = 1;
     int posicao_player = posicao;
     int score_anterior = ranking.top().first;
+
+    // E recria o arquivo em ordem
 
     while(!ranking.empty()){
 
@@ -83,6 +114,10 @@ int Jogo::getNumeroDeNaviosInicial(const int player){
 
 }
 
+//                            numero de navios atual              numero de navios do outro player
+// Pontuacao do player   =   ________________________    -    ________________________________________
+//                           numero de navios inicial         numero de navios inicial do outro player
+
 int Jogo::calcularPontuacao(const int player){
 
     return ((double)getNumeroDeNavios(player) / (double)getNumeroDeNaviosInicial(player) -
@@ -90,13 +125,6 @@ int Jogo::calcularPontuacao(const int player){
 
 }
 
-std::map<int, std::string> Jogo::intParaNome({
-
-        {T_Porta_teco_teco, "Porta Teco Teco"},
-        {T_Iate, "Iate"},
-        {T_Prancha_de_sup, "Prancha de SUP"}
-
-    });
 
 Mapa * Jogo::getPlayer(const int player){
 
@@ -123,9 +151,18 @@ void Jogo::setNome(std::string nome, const int player){
         nome_player2 = nome;
 }
 
+// Voce ja deve ter percebido que eu adoro o bang ne
 bool Jogo::estaVivo(const int player){
 
     return !!(getPlayer(player)->getNumeroDeNavios());
+
+}
+
+// Porque senao, aqui tem mais evidencia
+// Isso tranforma 1 em 2 e 2 em 1
+int Jogo::outroJogador(const int player){
+
+    return !(player - 1) + 1;
 
 }
 
@@ -154,34 +191,33 @@ int Jogo::getLargura(const int player){
 
 }
 
-int Jogo::outroJogador(const int player){
-
-    return !(player - 1) + 1;
-
-}
-
+// Ataca a coordenada (x, y) do mapa
 std::string Jogo::tiroEmCoordenada(const int x, const int y, const int player, const int dano, Navio * atacante, bool emMassa){
 
     if(atacante == NULL)
         atacante = getAlgumNavio(player);
 
-    return getPlayer(outroJogador(player))->ataque(x, y, atacante, dano, emMassa);
+    std::string resultado = getPlayer(outroJogador(player))->ataque(x, y, atacante, dano, emMassa);
 
     if(!atacante->estaVivo())
         getPlayer(player)->navioMorreu(atacante);
 
+    return resultado;
+
 }
 
-std::string Jogo::processarAcao(int * x, int * y, const int player, const int escolha){
-    
-    if(escolha > 0 and escolha < 5 and cooldownAlvo(player)[escolha])
+// Organiza menu de acoes, o que permite facil expansao dos tipos ataques diferentes do jogo
+std::string Jogo::processarAcao(const int x, const int y, const int player, const int escolha){
+
+    if(escolha > 0 and escolha < 6 and cooldownAlvo(player)[escolha]){
         return "FALHA" + std::to_string(cooldownAlvo(player)[escolha]);
+    }
 
     if(escolha == ATAQUE_COMUM)
-        return ataqueComum(*x, *y, player);
+        return ataqueComum(x, y, player);
 
     if(escolha == ATAQUE_EM_AREA)
-        return ataqueEmArea(*x, *y, player);        
+        return ataqueEmArea(x, y, player);        
 
     if(escolha == CURAR_NAVIO)
         return curar(player);
@@ -206,13 +242,13 @@ std::string Jogo::ataqueComum(const int x, const int y, const int player){
 
 std::string Jogo::ataqueEmArea(const int x, const int y, const int player){
 
-    cooldownAlvo(player)[ATAQUE_EM_AREA] = 4;
+    cooldownAlvo(player)[ATAQUE_EM_AREA] = 5;
 
     std::string resultado;
 
     Navio * atacante = getAlgumNavio(player);
 
-    int dano = randInt(1, getMaxDano()/4);
+    int dano = randInt(1, getMaxDano()/2);
 
     for(int i = x - 1; i <= x + 1; i++)
         for(int j = y - 1; j <= y + 1; j++){
@@ -226,7 +262,12 @@ std::string Jogo::ataqueEmArea(const int x, const int y, const int player){
             if(!atacante->estaVivo())
                 continue;
 
-            std::string recebeu = tiroEmCoordenada(i, j, player, dano, atacante, true);
+            std::string recebeu;
+
+            if(i == x and j == y)
+                recebeu = tiroEmCoordenada(i, j, player, dano, atacante);
+            else
+                recebeu = tiroEmCoordenada(i, j, player, dano, atacante, true);
 
             if(!recebeu.empty())
                 resultado += (!resultado.empty() ? "\n" : "") + recebeu;
@@ -253,9 +294,9 @@ std::string Jogo::curar(const int player){
 
 std::string Jogo::misselTeleguiado(const int player){
 
-    cooldownAlvo(player)[MISSEL_TELEGUIADO] = 3;
+    cooldownAlvo(player)[MISSEL_TELEGUIADO] = 5;
 
-    int dano = randInt(1, getMaxDano() / 2);
+    int dano = randInt(1, getMaxDano());
 
     Navio * atacado = getAlgumNavio(outroJogador(player));
 
@@ -267,26 +308,37 @@ std::string Jogo::misselTeleguiado(const int player){
 
 std::string Jogo::relevarPosicao(const int player){
 
-    cooldownAlvo(player)[RELEVAR_POSICAO] = 4;
+    cooldownAlvo(player)[RELEVAR_POSICAO] = 5;
 
     Navio * inimigo = getAlgumNavio(outroJogador(player));
 
-    inimigo->desamocar();
+    if(!(inimigo->getTipo() == T_FBI)){
+        
+        inimigo->desamocar();
 
-    return std::string("Um navio do tipo " + intParaNome[inimigo->getTipo()]) + " foi mostrado no mapa.";
+        return std::string("Um navio do tipo " + intParaNome[inimigo->getTipo()]) + std::string(" foi mostrado no mapa.");
+
+    }else{
+
+        return std::string("[O GOVERNO DOS ESTADOS UNIDOS IMPEDE ESSA ACAO DE ACONTECER]");
+
+    }
 
 }
 
 void Jogo::limparCooldown(const int player){
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 10; i++)
         cooldownAlvo(player)[i] = 0;
 
 }
 
+// Double bang de novo :D
+// Se valor da array for > 0, subtrai 1 (!!n == 1 para n != 0)
+// Caso contrario e zero mesmo
 void Jogo::diminuirCooldown(const int player){
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 10; i++)
         cooldownAlvo(player)[i] -= !!cooldownAlvo(player)[i];
 
 }
@@ -300,11 +352,7 @@ int * Jogo::cooldownAlvo(const int player){
 
 }
 
-#include <iostream>
-
 void Jogo::setMaxDano(const int novo){
-
-    std::cout<<"MAX DANO ALTERADO-------------------\n";
 
     maxDano = novo;
 
@@ -313,5 +361,35 @@ void Jogo::setMaxDano(const int novo){
 int Jogo::getMaxDano(){
 
     return maxDano;
+
+}
+
+// Simplesmente chama a funcao proximaAcao da inteligencia e roteia ela para processarAcao
+std::string Jogo::turnoDeInteligencia(){
+
+    auto acao = inteligencia.proximaAcao(getPlayer(1)->mostrarMapaDeJogo(), getNumeroDeNavios(2), cooldownAlvo(2));
+
+    ultima_acao_inteligencia = acao.first;
+
+    return processarAcao(acao.second.first, acao.second.second, 2, acao.first);
+
+}
+
+void Jogo::setDificuldade(const int dificuldade){
+
+    inteligencia.setDificuldade(dificuldade);
+
+}
+
+std::string Jogo::getUltimaAcao(){
+
+    return stringAcao[ultima_acao_inteligencia];
+
+}
+
+void Jogo::novosMapas(){
+
+    player1 = Mapa();
+    player2 = Mapa();
 
 }

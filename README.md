@@ -1,39 +1,44 @@
 # A Batalha do Lago Paranoá
 
-REPOSITÓRIO ORIGINAL: https://gitlab.com/renatoba/ep1
-
 &nbsp;&nbsp;Reacriação brasiliense do Batalha Naval!
+
+<p align="center"> 
+<img src="https://i.imgur.com/D7Uyyij.png">
+</p>
 
 ## Jogo
 
-Jogo possui sistema de mapas onde você pode criar mapas à mão, gera-los e altera-los a gosto do cliente
+Jogo possui sistema de mapas onde você pode criar mapas à mão e gera-los aleatoriamente.
 
-Dois players jogam um contra o outro às margens do lago paranoá em busca de sangue, cada um com seu mapa contendo suas embarcações
+Dois players jogam um contra o outro às margens do lago paranoá em busca de sangue, cada um com seu mapa contendo suas embarcações.
 
-Atualmente o jogo possui três embarcações:
+A condição de vitória é destruir todos os navios do adversário.
 
-- Porta Teco Teco:
+Existe uma atributo de Dano Maximo que define o teto de dano dos ataques, quanto mais alto, mas fácil e destruir os navios e quanto mais baixo, mais estratégico fica o jogo.
 
-O Porta Teco-Teco e um navio de grade porte que transporta avioes do tipo teco-teco, pilotado por pilotos da FAB. 
-Quanto mais avioes um Porta Teco-Teco possui, maior sao as chances de ele destruir o ataque antes de ele atingir. 
-A competencia dos pilotos do teco teco definem o seu contrataque e a cada ataque recebido a habilidade dos pilotos aumenta. 
-Assim que atingido, o Porta Teco-Teco mostra sua posicao e vida, pois o barulho dos Teco-Tecos voando e reconhecivel de longe. 
-A cada ataque bem sucedido, o numero de Teco-Tecos decrementa em um.
+Existem 8 tipos de embarcações, cada uma com suas peculiaridades, vantagens e fraquezas.
 
-- Prancha de SUP:
+Existem, também, 5 tipos de ataques que os players podem utilizar, alguns deles com cooldown.
 
-A Prancha de SUP possui apenas 1 bloco de tamanho, o que torna ela dificil de se encontrar no mapa. 
-Ela possui um remo, que deflete ataques podem a cada ataque defletido, fica mais improvavel que os ataques subsequentes serao defletidos.
+Diferente do batalha naval comum, o critério para se destruir um navio e tirar toda a vida dele (cada tipo de navio possui uma vida inicial diferente). Os navios podem contra-atacar, defender, refletir o ataque, se curar e outros. 
 
-- Iate:
+Todos os navios possuem um atributo de visibilidade. Alguns navios já começam o jogo visiveis, outros podem ficar visíveis se atacados e outros ainda nao ficam visíveis durante o jogo nunca. 
 
-O Iate e um barco de gente rica, por isso seu principal atributo e dinheiro. 
-Quanto mais dinheiro ele possui, menor dano toma pois pode subornar o missel. 
-Alem disso, seu nivel de fama define o quao facil e detecta-lo num ataque. 
-O Iate pode ser de um politico, o que faz ele ganhar um buff de dinheiro porem sempre e detectado quando e atacado. 
-Por ser politico, o dono do Iate pode te processar porque perder dinheiro e perder vida, e faz mal para a saude.
+## Modo Historia
 
-## Instruções
+No modo historia, voce luta contra figuras politicas brasileiras e globais.
+
+<p align="center"> 
+<img src="https://i.imgur.com/L7iohHn.png">
+</p>
+
+O modo segue uma progressão de dificuldade à la Mortal Kombat em que fica cada vez mais difícil ganhar a partida atual.
+
+O fim de jogo possui um plot twist.
+
+Existem cheats escondidos pelo jogo, basta achar.
+
+## Instruções de como jogar
 
 Para compilar:
 ```
@@ -47,7 +52,15 @@ $ make run
 
 ## Compatibilidade
 
-Esse programa compila e roda pelo terminal do Ubuntu 16.04 LTS
+Esse programa compila e roda pelo terminal do Ubuntu 16.04 LTS.
 
 Como funções específicas do linux são usadas (como a usleep()), esse programa não é compatível com o Windows.
+
+## Sobre o sistema de mapas
+
+Cada player possui seu mapa de jogo (possivelmente com número de navios e dimensões diferentes). Os mapas são guardados de forma padronizada num arquivo .mapa. Veja o arquivo em ./doc/mapa_de_contexto para entender como é guardado.
+
+## Sobre o sistema de pontuacao e ranking
+
+A pontução de um player pode ser calculada a qualquer momento da partida e pode ser salva num arquivo .ranking para ser visto depois. Varia de [-100, 100].
 

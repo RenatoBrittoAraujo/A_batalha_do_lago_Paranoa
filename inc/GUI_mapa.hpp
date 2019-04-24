@@ -1,8 +1,6 @@
 #ifndef GUI_MAPA
 #define GUI_MAPA
 
-#include <vector> // vector
-
 #include "mapa.hpp"
 #include "GUI_basica.hpp"
 

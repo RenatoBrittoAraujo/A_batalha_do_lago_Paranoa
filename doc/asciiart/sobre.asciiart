@@ -1,0 +1,176 @@
+    ╔═════════════════════════════════════════════════════════════════════════════════╗
+    ║                                                                                 ║
+    ║ Versao brasiliense do batalha naval!                                            ║
+    ║                                                                                 ║
+    ║ Pode ser jogado por 2 players ou sozinho, e possui um modo historia.            ║
+    ║ Cada player possui seu mapa e navios.                                           ║
+    ║ Ganha o player que eliminar todos os navios inimigos primeiro.                  ║
+    ║                                                                                 ║
+    ║ Existe um sistema de ranking, disponivel apenas para modo multiplayer.          ║
+    ║                                                                                 ║
+    ║ => Simbolos do mapa:                                                            ║
+    ║                                                                                 ║
+    ║ '~' => Mar                                                                      ║
+    ║ 'X' => Tiro anterior                                                            ║
+    ║ 'H' => Iate                                                                     ║
+    ║ '#' => Porta teco teco                                                          ║
+    ║ '0' => Prancha de SUP                                                           ║
+    ║ '?' => [CLASSIFICADO]                                                           ║
+    ║ '$' => Dois caras numa moto                                                     ║
+    ║ '+' => Espaco Nave                                                              ║
+    ║ '8' => Caravela                                                                 ║
+    ║ '@' => Jet Ski                                                                  ║
+    ║                                                                                 ║
+    ╠═════════════════════════════════════════════════════════════════════════════════╣
+    ║                                                                                 ║
+    ║ => Inteligencia                                                                 ║
+    ║                                                                                 ║
+    ║ E o nome dado ao adversario que joga contra voce no modo single-player          ║
+    ║ Possui um nivel de dificuldade que varia de 1 -> 3, sendo 3 o mais dificil.     ║
+    ║                                                                                 ║
+    ║ Vale lembrar que, como toda boa e velha IA, e so um bando de if statements.     ║
+    ║                                                                                 ║
+    ╠═════════════════════════════════════════════════════════════════════════════════╣
+    ║                                                                                 ║
+    ║ => Descricoes dos navios:                                                       ║
+    ║                                                                                 ║
+    ║ Todos os navios nascem com atributos escondidos e, a cada ataque,               ║
+    ║ seus atributos podem mudar e alterar o seu potencial de batalha no jogo.        ║
+    ║ Alem disso, alguns navios podem comecar o jogo sendo visiveis no mapa           ║
+    ║                                                                                 ║
+    ║ e outros escondidos, o que torna o jogo mais dinamico.                          ║
+    ║ Se escondido, sua posicao pode ser revelada durante o jogo.                     ║
+    ║                                                                                 ║
+    ║ Diferente da versao normal do batalha naval, destruir um navio nao depende      ║
+    ║ do numero de blocos dele e sim da sua vida, fica mais divertido assim           ║
+    ║ e o tipo de estrategia utilizada muda completamente.                            ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Prancha de SUP:                                                                 ║
+    ║ Atributos:   remo                                                               ║
+    ║ Vida inicial:  50                                                               ║
+    ║ Descricao:                                                                      ║
+    ║ A Prancha de SUP possui apenas 1 bloco de tamanho, o que                        ║
+    ║ torna ela dificil de se encontrar no mapa. Ela possui um remo, que              ║
+    ║ deflete ataques podem a cada ataque defletido, fica mais improvavel             ║
+    ║ que os ataques subsequentes serao defletidos                                    ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Jet Ski:                                                                        ║
+    ║ Atributos:   turbo                                                              ║
+    ║ Vida inicial:  30                                                               ║
+    ║ Descricao:                                                                      ║
+    ║ O Jet Ski e agil e se seu turbo estiver ligado, ele foge                        ║
+    ║ do ataque com velocidade porem gasta seu turbo no processo                      ║
+    ║ Seu turbo pode se reestabelecer aletoriamente.                                  ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Espaco Nave:                                                                    ║
+    ║ Atributos:   tecnologia                                                         ║
+    ║ Vida inicial:  120                                                              ║
+    ║ Descricao:                                                                      ║
+    ║ Possui tecnologia intergalatica, porem a gasolina acabou e eles cairam          ║
+    ║ na terra. O nivel de tecnologia define o pontecial de auto cura da nave.        ║
+    ║ Existe um Easter Egg para as naves espaciais. Mas apenas para                   ║
+    ║ quem entende a frase de saida do jogo.                                          ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Dois caras numa moto:                                                           ║
+    ║ Atributos:   responsa na quebrada                                               ║
+    ║ Vida inicial:  10                                                               ║
+    ║ Descricao:                                                                      ║
+    ║ Muito fragil e muito perigoso, os dois caras numa moto sairam                   ║
+    ║ de alguma quebrada pra mete o loco e fazer um dinheiro e pararam no             ║
+    ║ lago. Se os caras na moto forem responsa na quebrada, eles podem chamar         ║
+    ║ seu coligados, que vao te mostrar o .38 deles quando atacados.                  ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ [INFORMACAO CONFIDENCIAL]:                                                      ║
+    ║ Atributos:     [CLASSIFICADO]                                                   ║
+    ║ Vida inicial:  [CLASSIFICADO]                                                   ║
+    ║ Descricao:                                                                      ║
+    ║ ioahnamisd89qc yce891 29129c3 12m3hy912hc3euq023aa9a9a9 69 420 hjavvvvvvjjsjs d ║
+    ║ m0-v81EV+@#+!@#+!!@#))+AAWdV-cheater-K139ÇnomeNnoY8modo01KhistoriaSny32ny9eiiww ║
+    ║ -------------[[[ENCRIPTADO PELO GOVERNO DOS ESTADOS UNIDOS]]]------------------ ║
+    ║ 90m12evu891n2ye9vnyc9w1nmy812c90290nmye8912890nyce389012y891mye89c12nmyu0cen1y2 ║
+    ║ 3n248230mp23v02nR_USS_IcA023nu4,p302v9EmS+PI3A_O23v=9-4v23=4,923v94234i23094--2 ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Iate:                                                                           ║
+    ║ Atributos:  fama, dinheiro, e de politico                                       ║
+    ║ Vida inicial:  100                                                              ║
+    ║ Descricao:                                                                      ║
+    ║ O Iate e um barco de gente rica, por isso seu principal atributo e dinheiro.    ║
+    ║ Quanto mais dinheiro ele possui, menor dano toma pois pode subornar o missel.   ║
+    ║ Alem disso, seu nivel de fama define o quao facil e detecta-lo num ataque.      ║
+    ║ O Iate pode ser de um politico, o que faz ele ganhar                            ║
+    ║ um buff de dinheiro porem sempre e detectado quando e atacado.                  ║
+    ║ Por ser politico, o dono do Iate pode te processar porque perder                ║
+    ║ dinheiro e perder vida, e faz mal para a saude.                                 ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Porta Teco Teco:                                                                ║
+    ║ Atributos:   competencia dos pilotos, teco tecos                                ║
+    ║ Vida inicial:  50                                                               ║
+    ║ Descricao:                                                                      ║
+    ║ O Porta Teco-Teco e um navio de grade porte que transporta avioes do            ║
+    ║ tipo teco-teco, pilotado por pilotos da FAB.                                    ║
+    ║ Quanto mais avioes um Porta Teco-Teco possui, maior sao as chances de           ║
+    ║ ele destruir o ataque antes de ele atingir.                                     ║
+    ║ A competencia dos pilotos do teco teco definem o seu contrataque e a            ║
+    ║ cada ataque recebido a habilidade dos pilotos aumenta.                          ║
+    ║ Assim que atingido, o Porta Teco-Teco mostra sua posicao e vida, pois           ║
+    ║ o barulho dos Teco-Tecos voando e reconhecivel de longe.                        ║
+    ║ A cada ataque bem sucedido, o numero de Teco-Tecos decrementa em um.            ║
+    ║                                                                                 ║
+    ╠═════════════════════════════════════════════════════════════════════════════════╣
+    ║                                                                                 ║
+    ║ => Descricao das acoes                                                          ║
+    ║                                                                                 ║
+    ║ O player possui um arsenal de acoes para fazer, cada uma com                    ║
+    ║ sua caracteristicas e tempo de recarga diferentes                               ║
+    ║                                                                                 ║
+    ║ Alem disso, existe a chance que ataques falhem.                                 ║
+    ║                                                                                 ║
+    ║ Existe o atributo de Dano Maximo, um numero que basicamente diz o quanto        ║
+    ║ de dano um ataque causa. Quanto mais Dano Maximo, mais dinamico fica o jogo     ║
+    ║ e mais potente sao todos os ataques                                             ║
+    ║                                                                                 ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Ataque comum:                                                                   ║
+    ║ Causa algo entre 1 - Dano Maximo no navio se acertar                            ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Ataque em area:                                                                 ║
+    ║ Causa entre 1 - metade do Dano Maximo na coordenada e nos pontos ao redor       ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Curar:                                                                          ║
+    ║ Cura entre 1 - Dano Maximo de algum dos seus navios                             ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Missel teleguiado:                                                              ║
+    ║ Ataca um inimigo aleatorio e causa entre 1 - Dano Maximo de dano                ║
+    ║ -----------------------------                                                   ║
+    ║                                                                                 ║
+    ║ Revelar posicao:                                                                ║
+    ║ Simplesmente mostra no mapa a posicao de um inimigo qualquer                    ║
+    ║ As vezes mostra posicao de inimigos ja revelados, e aleatorio                   ║
+    ║                                                                                 ║
+    ╠═════════════════════════════════════════════════════════════════════════════════╣
+    ║                                                                                 ║
+    ║ Muito obrigado por jogar                                                        ║
+    ║                                                                                 ║
+    ║                                                                                 ║  
+    ║ Feito por Renato Britto Araujo.                                                 ║
+    ║ UnB-FGA Orientacao a Objetos 2019/1 EP1                                         ║
+    ║                                                                                 ║
+    ╚═════════════════════════════════════════════════════════════════════════════════╝

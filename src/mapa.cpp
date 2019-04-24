@@ -33,7 +33,6 @@ std::vector<std::string> Mapa::ataquesFalhos({
 std::vector<std::string> Mapa::ataquesNaAgua({
 
     "matou alguns peixes.",
-    "acertou um Jet Ski.",
     "matou um banhista. Seu velorio e amanha.",
     "e sera desenterrado num futuro distante por povos mais avancados.",
     "causou um tsunami que alagou o Pontao.",
@@ -63,7 +62,12 @@ std::map<std::string, int> Mapa::stringTipo({
 
     {"porta_teco_teco", T_Porta_teco_teco},
     {"iate", T_Iate},
-    {"prancha_de_sup", T_Prancha_de_sup}
+    {"prancha_de_sup", T_Prancha_de_sup},
+    {"fbi", T_FBI},
+    {"espaco_nave", T_Espaco_nave},
+    {"caravela", T_Caravela},
+    {"dois_caras_numa_moto", T_Dois_caras_numa_moto},
+    {"jet_ski", T_Jet_Ski}
 
 });
 
@@ -80,7 +84,12 @@ std::map<int, std::string> Mapa::intTipo({
 
     {T_Porta_teco_teco, "porta_teco_teco"},
     {T_Iate, "iate"},
-    {T_Prancha_de_sup, "prancha_de_sup"}
+    {T_Prancha_de_sup, "prancha_de_sup"},
+    {T_FBI, "fbi"},
+    {T_Espaco_nave, "espaco_nave"},
+    {T_Caravela, "caravela"},
+    {T_Dois_caras_numa_moto, "dois_caras_numa_moto"},
+    {T_Jet_Ski, "jet_ski"}
 
 });
 
@@ -126,6 +135,21 @@ Navio * Mapa::alocarNavio(const int tipo){
 
     if(tipo == T_Prancha_de_sup)
         ponteiro = new Pracha_de_SUP;
+
+    if(tipo == T_Dois_caras_numa_moto)
+        ponteiro = new Dois_caras_numa_moto;
+    
+    if(tipo == T_Jet_Ski)
+        ponteiro = new JetSki;
+
+    if(tipo == T_FBI)
+        ponteiro = new FBI;
+
+    if(tipo == T_Espaco_nave)
+        ponteiro = new Espaco_nave;
+
+    if(tipo == T_Caravela)
+        ponteiro = new Caravela;
 
     return ponteiro;
 
@@ -403,7 +427,7 @@ void Mapa::gerarMapa(const int numero_de_navios){
             int x = randInt(1, largura);
             int y = randInt(1, altura);
             int orientacao = randInt(SUL, OESTE);
-            int tipo = randInt(1, 3);
+            int tipo = randInt(1, 8);
 
             valido = inserirNavio(x, y, tipo - 1, orientacao);
 
@@ -508,7 +532,7 @@ std::string Mapa::ataque(const int x, const int y, Navio * inimigo, const int da
 
         // Se morreu o atacante no contra-ataque
         if(!inimigo->estaVivo())
-            resultado += " O contra-ataque do inimigo matou todos na embarcação do atacante!";
+            resultado += " O contra-ataque do inimigo matou todos em alguma embarcao aleatoria do atacante!";
 
     }
 

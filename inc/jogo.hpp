@@ -2,6 +2,7 @@
 #define JOGO
 
 #include "mapa.hpp"
+#include "inteligencia.hpp"
 
 class Jogo{
 
@@ -20,8 +21,14 @@ private:
     std::string nome_player2;
 
     // O tempo que o player deve esperar no turno atual para poder usar determinaod ataque
-    int cooldown_player1[10];
-    int cooldown_player2[10];
+    int cooldown_player1[15];
+    int cooldown_player2[15];
+
+    // Inteligencia que joga contra o player no modo singleplayer
+    Inteligencia inteligencia;
+
+    // Guarda valor da ultima escolha da inteligencia para contextualizar o jogo
+    int ultima_acao_inteligencia;
 
     // Retorna o endereco de array pro player desejeado
     int * cooldownAlvo(const int player);
@@ -51,20 +58,23 @@ private:
     // Revela posicao de algum navio do inimigo
     std::string relevarPosicao(const int player);
 
-    // Enumeracoes do menu de jogo
-    enum acoes{SAIR_DO_JOGO, ATAQUE_COMUM, ATAQUE_EM_AREA, CURAR_NAVIO, MISSEL_TELEGUIADO, RELEVAR_POSICAO};
-
     // Transforma tipo de navio em int para string com seu nome
     static std::map<int, std::string> intParaNome;
-
-    // Retorna o numero de navios no mapa do player
-    int getNumeroDeNavios(const int player);
 
     // Retorna o numero de navios inicial no mapa do player
     int getNumeroDeNaviosInicial(const int player);
 
+    // Tranforma valor numerico de acao em string
+    static std::map<int, std::string> stringAcao;
+
 public:
 
+    // Processa turno de Inteligencia e retorna suas acoes
+    std::string turnoDeInteligencia();
+
+    // Retorna o numero de navios no mapa do player
+    int getNumeroDeNavios(const int player);
+    
     // Retorn ponteiro para mapa de player
     Mapa * getPlayer(const int player);
 
@@ -90,7 +100,7 @@ public:
     int outroJogador(const int player);
 
     // Processa acao escolhida por player
-    std::string processarAcao(int * x, int * y, const int player, const int escolha);
+    std::string processarAcao(const int x, const int y, const int player, const int escolha);
 
     // Seta o cooldown de todas os ataques como 0
     void limparCooldown(const int player);
@@ -109,6 +119,15 @@ public:
 
     // Salva pontuacao do player no arquivo .scoreboard
     int salvarPontuacao(const int player);
+
+    // Seta um valor para a dificuldade da Inteligencia
+    void setDificuldade(const int dificuldade);
+
+    // Retorna string com a escolha que a IA fez
+    std::string getUltimaAcao();
+    
+    // Cria novas instancias de mapas
+    void novosMapas();
 
 };
 

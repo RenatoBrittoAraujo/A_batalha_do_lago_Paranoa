@@ -146,6 +146,7 @@ private:
 
     // Configura vida do navios e mapea navios na estrutura map
     void configurarJogo();
+    
 
 };
 

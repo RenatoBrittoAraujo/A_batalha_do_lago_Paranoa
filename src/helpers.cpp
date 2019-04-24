@@ -14,11 +14,17 @@ void seedAleatoria(){
 
 // Essa funcao evita divisao por 0, portanto nao acontece floating point exception quando chamada
 int randInt(int l, int r){
+
+    if(r < l or l < 0 or r < 0)
+        return 0;
+
     seedAleatoria();
     return rand() % (r - l + 1) + l;
 }
 
 bool arquivoExiste(const std::string& nome) {
+
     std::ifstream arquivo(nome);
     return arquivo.good();
+
 }

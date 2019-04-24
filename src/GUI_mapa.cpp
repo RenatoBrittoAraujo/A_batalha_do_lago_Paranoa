@@ -15,7 +15,6 @@ GUI_mapa::GUI_mapa(){
         "Criar mapa", 
         "Gerar mapa aleatorio", 
         "Excluir mapa",
-        "Listar mapas",
         "Ver mapa",
         "Voltar para o menu principal"
 
@@ -177,38 +176,59 @@ void GUI_mapa::criarMapa(){
             std::string direcao = "";
             int tipo = 0, x = 0, y = 0;
 
-            while(tipo < 1 or tipo > 3){
-                std::cout<<"Tipo de navio (1 - Iate, 2 - Porta teco teco, 3 - Prancha de SUP): ";
-                std::cin>>tipo;
+            std::vector<std::string> opcoes = {
+                "Iate",
+                "Porta Teco Teco",
+                "Prancha de SUP",
+                "Dois caras numa moto",
+                "Jet Ski",
+                "Caravela",
+                "Espaco Nave",
+                "[CONFIDENCIAL]",
+                "Voltar"
+            };
+
+            limpaTela();
+            quebraLinha(2);
+            formatarDist();
+            std::cout<<"Mapa '"<<mapa.getNome()<<"':\n";
+            quebraLinha(2);
+            printArray(mapa.mostrarMapa(), true);
+            quebraLinha();
+
+            tipo = menuEscolha(&opcoes);
+
+            if(tipo != 0){
+
+                while(x < 1 or x > mapa.getLargura()){
+                    std::cout<<"Eixo X: ";
+                    std::cin>>x;
+                } 
+
+                while(y < 1 or y > mapa.getAltura()){
+                    std::cout<<"Eixo Y: ";
+                    std::cin>>y;
+                }
+
+                while(orientacao.find(direcao) == orientacao.end()){
+                    std::cout<<"Orientacao (norte, sul, leste, oeste): ";
+                    std::cin>>direcao;
+                }
+
+                quebraLinha(1);
+
+                tipo--;
+
+                if(mapa.inserirNavio(x, y, tipo, orientacao[direcao]))
+                    formatarDist(),
+                    std::cout<<"Navio colocado\n";
+                else
+                    formatarDist(),
+                    std::cout<<"Orientacao invalida\n";
+
+                usleep(1000000);
+
             }
-
-            while(x < 1 or x > mapa.getLargura()){
-                std::cout<<"Eixo X: ";
-                std::cin>>x;
-            } 
-
-            while(y < 1 or y > mapa.getAltura()){
-                std::cout<<"Eixo Y: ";
-                std::cin>>y;
-            }
-
-            while(orientacao.find(direcao) == orientacao.end()){
-                std::cout<<"Orientacao (norte, sul, leste, oeste): ";
-                std::cin>>direcao;
-            }
-
-            quebraLinha(1);
-
-            tipo--;
-
-            if(mapa.inserirNavio(x, y, tipo, orientacao[direcao]))
-                formatarDist(),
-                std::cout<<"Navio colocado\n";
-            else
-                formatarDist(),
-                std::cout<<"Falha ao botar navio\n";
-
-            usleep(1000000);
 
         }
 
@@ -232,10 +252,11 @@ void GUI_mapa::criarMapa(){
 
 }
 
+
 void GUI_mapa::excluirMapa(){
 
     limpaTela();
-    quebraLinha();
+    listarMapas(1);
     formatarDist();
     std::cout<<"Nome do mapa a ser excluido: ";
     std::cin.ignore();
@@ -286,34 +307,27 @@ void GUI_mapa::excluirMapa(){
         
     }
 
-    usleep(2000000);
+    travaDeLeitura();
 
 }
-
-/*
-void GUI_mapa::atualizarMapa(){
-
-
-
-}
-*/
 
 void GUI_mapa::verMapa(){
 
     limpaTela();
-    quebraLinha();
+    listarMapas(1);
     formatarDist();
     std::cout<<"Nome do mapa: ";
     std::string nome;
+    
     std::cin.ignore();
     std::getline(std::cin, nome);
 
     if(!arquivoExiste("./doc/" + nome + ".mapa")){
 
-        quebraLinha();
+        quebraLinha(2);
         formatarDist();
-        std::cout<<"Mapa nao encontrado\n";
-        usleep(2000000);
+        std::cout<<"Mapa com nome '"<<nome<<"' nao encontrado\n";
+        travaDeLeitura();
         return;
 
     }
@@ -327,8 +341,7 @@ void GUI_mapa::verMapa(){
     printArray(mapa.mostrarMapa(), true);
 
     quebraLinha();
-    std::cout<<"Digite qualquer tecla para voltar: ";
-    char leitura;
-    std::cin>>leitura;
+    
+    travaDeLeitura();
 
 }

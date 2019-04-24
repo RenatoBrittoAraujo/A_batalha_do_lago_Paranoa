@@ -1,14 +1,18 @@
-#include <iostream> // cout
+#include <iostream> // cout, cin
 #include <string> // string
 #include <unistd.h> // usleep
 #include <sys/types.h> // DIR, opendir, readdir, closedir
 #include <dirent.h> // dirent
+#include <algorithm> // transform
+#include <fstream> // ifstream
 
 #include "../inc/GUI_basica.hpp"
 
 GUI_basica::GUI_basica(){}
 GUI_basica::~GUI_basica(){}
 
+// Isso printa algo no terminal que limpa tudo que ta escrito nele exceto o cursor
+// So deus sabe porque, ou quem sabe regex.
 void GUI_basica::limpaTela(){
 
     std::cout << "\033[2J\033[1;1H";
@@ -24,30 +28,38 @@ void GUI_basica::formatarDist(const int espaco){
 
 void GUI_basica::printaTitulo(const int espaco){
 
-    formatarDist(espaco); std::cout<<"         A  BATALHA  DO  LAGO         "<<std::endl;
-    formatarDist(espaco); std::cout<<" ____ ____ ____ ____       _____ ____ "<<std::endl;
-    formatarDist(espaco); std::cout<<" |  | |  | |  | |  | |\\  | |   | |  | "<<std::endl;
-    formatarDist(espaco); std::cout<<" |__| |__| |__| |__| | \\ | |   | |__| "<<std::endl;
-    formatarDist(espaco); std::cout<<" |    |  | | \\_ |  | |  \\| |___| |  | "<<std::endl;
-    
+    formatarDist(espaco); std::cout<<"●▬▬▬▬▬▬▬▬▬▬▬▬▬▬๑۩۩๑▬▬▬▬▬▬▬▬▬▬▬▬▬▬●"<<std::endl<<std::endl;
+    formatarDist(espaco); std::cout<<"         A ʙᴀᴛᴀʟʜᴀ ᴅᴏ ʟᴀɢᴏ       "<<std::endl<<std::endl;
+    formatarDist(espaco); std::cout<<"█▀▀█ █▀▀█ █▀▀█ █▀▀█ █▀▀▄ █▀▀█ █▀▀█"<<std::endl;
+    formatarDist(espaco); std::cout<<"█  █ █▄▄█ █▄▄▀ █▄▄█ █  █ █  █ █▄▄█"<<std::endl;
+    formatarDist(espaco); std::cout<<"█▀▀▀ ▀  ▀ ▀ ▀▀ ▀  ▀ ▀  ▀ ▀▀▀▀ ▀  ▀"<<std::endl<<std::endl;
+    formatarDist(espaco); std::cout<<"●▬▬▬▬▬▬▬▬▬▬▬▬▬▬๑۩۩๑▬▬▬▬▬▬▬▬▬▬▬▬▬▬●"<<std::endl<<std::endl;
+        
 }
 
+// Vetor padrao cujo qual se voce nao passar nada para a funcao menu escolha, ela imprime as opcoes desse
 std::vector<std::string> opcoes = {};
 
+// Printa, para um elemento especifico do vetor opcoes sua representacao no menu
 void GUI_basica::exibirOpcao(const int escolha, const int espaco, std::vector<std::string> * opcoes){
 
+    // Caso nao tenha sido passado um vetor especifico, ele pega o estatico da classe
     if(opcoes == NULL)
         opcoes = &(this->opcoes);
 
+    // Para cada uma dos elementos de opcao sua representacao
     for(int i = 0; i < (int)opcoes->size(); i++){
         formatarDist(espaco);
 
+        // Caso escolha nao tenha sido feita, printa com o numero na frente
         if(escolha < 0 or escolha > (int)opcoes->size() - 1)
             std::cout << (i + 1 == (int)opcoes->size() ? 0 : i + 1) << ". " << opcoes->at(i) << std::endl;
 
+        // Depois de ser feita, printa item alvo da escolha com seta na frente
         else if(i + 1 == escolha or (escolha == 0 and i + 1 == (int)opcoes->size()))
-            std::cout << "=>" << ' ' << opcoes->at(i) << std::endl;
+            std::cout << "▶ " << ' ' << opcoes->at(i) << std::endl;
 
+        // E os outros sem nada na frente
         else
             std::cout << "  " << ' ' << opcoes->at(i) << std::endl;
          
@@ -56,6 +68,7 @@ void GUI_basica::exibirOpcao(const int escolha, const int espaco, std::vector<st
 
 void GUI_basica::printArray(const std::vector<std::string> * vetor, const bool numeracao, const int espaco, const int sep){
 
+    // Se numeracao esta ligada, printa alem do vetor, o numero das posicoes
     if(numeracao){
         formatarDist(sep + 9);
         for(size_t i = 1; i < (size_t)vetor->at(0).size(); i++){
@@ -75,7 +88,7 @@ void GUI_basica::printArray(const std::vector<std::string> * vetor, const bool n
         std::cout<<std::endl;
     }
             
-
+    // Printa o vetor com numeracao
     for(size_t i = 1; i < (size_t)vetor->size(); i++){
 
         formatarDist(espaco);
@@ -105,6 +118,10 @@ void GUI_basica::quebraLinha(const int espaco){
 
 }
 
+// Menu usado por todas as GUI's para mostrar opcoes necessarias
+// Retorna um inteiro da opcao que o usuario fez
+// Vale lembrar que sempre tem a opcao '0' que retorna 0 e teoricamente
+// volta de qualquer menu para qualquer anterior
 int GUI_basica::menuEscolha(std::vector<std::string> * opcoes){
 
     bool temTitulo = false;
@@ -132,13 +149,11 @@ int GUI_basica::menuEscolha(std::vector<std::string> * opcoes){
         exibirOpcao(-1, 12, opcoes);
         quebraLinha();
 
+
         std::cout<<"Sua escolha: ";
         std::cin>>leitura;
-
-        usleep(1000);
+        
     }
-
-    usleep(1000);
 
     if(temTitulo){
         limpaTela();
@@ -154,11 +169,13 @@ int GUI_basica::menuEscolha(std::vector<std::string> * opcoes){
         quebraLinha();
     }
 
+
     usleep(300000);
 
     return leitura - '0';
 }
 
+// Vai no diretorio ./doc e printa todos os arquivos .mapa la
 void GUI_basica::listarMapas(bool mesmaTela){
 
     if(!mesmaTela)
@@ -168,6 +185,8 @@ void GUI_basica::listarMapas(bool mesmaTela){
     formatarDist();
 
     std::cout<<"Lista de mapas:\n\n";
+
+    // As unicas partes desse programa inteiro que eu nao sei como funcionam sao as duas linhas de codigo abaixo
 
     DIR *diretorio;
 
@@ -194,9 +213,44 @@ void GUI_basica::listarMapas(bool mesmaTela){
     
     quebraLinha();
 
-    if(!mesmaTela){
-        std::cout<<"Digite qualquer tecla para voltar: ";
-        char leitura;
-        std::cin>>leitura;
+    if(!mesmaTela)
+        travaDeLeitura();
+}
+
+// Espera ususario apertar enter para continuar
+void GUI_basica::travaDeLeitura(){
+
+    formatarDist();
+    std::cout<<"Aperte ENTER para continuar ";
+    std::string leitura;
+    std::cin.clear();
+    std::cin.ignore();
+    std::getline(std::cin, leitura);
+
+}
+
+void GUI_basica::printaImagem(std::string nome, const int espaco){
+
+    std::transform(nome.begin(), nome.end(), nome.begin(), ::tolower);
+
+    std::ifstream arquivo("./doc/asciiart/" + nome + ".asciiart");
+
+    if(!arquivo.good())
+        return;
+
+    while(!arquivo.eof()){
+
+        std::string linha;
+
+        std::getline(arquivo, linha);
+
+        if(!linha.empty())
+            formatarDist(espaco);
+
+        std::cout<<linha<<std::endl;
+        
     }
+
+    arquivo.close();
+
 }

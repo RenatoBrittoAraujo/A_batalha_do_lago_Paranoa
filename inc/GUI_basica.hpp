@@ -41,9 +41,16 @@ protected:
     // Exibe opcoes baseadas no vetor statico opcoes
     void exibirOpcao(const int escolha = -1, const int espaco = 18, std::vector<std::string> * opcoes = NULL);
 
+    // Espera input do usuario para ir para o proximo estado de jogo
+    void travaDeLeitura();
+
+    // Printa arte ascii na tela
+    void printaImagem(std::string nome, const int espaco = 10);
+
 public:
 
-    // Cria menu para opcoes diferentes
+    // Cria menu para opcoes diferentes, se opcoes for nula, cria menu com vetor de opcoes estatico
+    // criado junto com a classe
     int menuEscolha(std::vector<std::string> * opcoes = NULL);
 
     // Mostra uma lista dos mapas disponiveis
